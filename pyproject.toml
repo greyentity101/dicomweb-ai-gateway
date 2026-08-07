@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dicomweb-ai-gateway"
+version = "0.1.0"
+description = "Self-hosted, standards-compliant AI orchestration for radiology: DICOMweb ingestion → model-agnostic inference → structured results (DICOM SR + FHIR) → report-grounding verification."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Mohit Kumar", email = "mohitjat202@gmail.com" }]
+keywords = [
+    "dicom", "dicomweb", "pacs", "dicom-sr", "medical-imaging", "radiology",
+    "ai", "machine-learning", "fhir", "structured-reporting", "healthcare-it",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+    "Topic :: System :: Networking",
+]
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "pydicom>=2.4",
+    "pydantic>=2.6",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "httpx>=0.27"]
+llm = ["ollama>=0.4", "openai>=1.0"]  # optional LLM grounding worker
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.4"]
+
+[project.scripts]
+dicomweb-gateway = "dicomweb_ai_gateway.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
